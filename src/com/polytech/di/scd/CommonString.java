@@ -1,4 +1,4 @@
-package xyz.mickaelgillot.polytech;
+package com.polytech.di.scd;
 
 public class CommonString {
 	private int pos1;
@@ -13,5 +13,17 @@ public class CommonString {
 	
 	public String toString(){
 		return "(\""+tab+"\", "+pos1+", "+pos2+")";
+	}
+	
+	public int get_pos1(){
+		return pos1;
+	}
+	
+	public int get_pos2(){
+		return pos2;
+	}
+	
+	public IntString get_tab(){
+		return tab;
 	}
 }
