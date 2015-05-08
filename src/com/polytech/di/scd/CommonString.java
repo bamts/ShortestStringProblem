@@ -1,6 +1,6 @@
 package com.polytech.di.scd;
 
-public class CommonString {
+public class CommonString implements Comparable<CommonString>{
 	private int pos1;
 	private int pos2;
 	private IntString tab;
@@ -26,4 +26,10 @@ public class CommonString {
 	public IntString get_tab(){
 		return tab;
 	}
+
+	@Override
+	public int compareTo(CommonString _csl) {
+		return this.tab.compareTo(_csl.tab);
+	}
+
 }

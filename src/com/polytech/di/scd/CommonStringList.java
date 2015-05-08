@@ -1,17 +1,24 @@
 package com.polytech.di.scd;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
-public class CommonStringList {
+
+public class CommonStringList{
 	private IntString s1;
 	private IntString s2;
-	private HashSet<CommonString> csl;
+	private ArrayList<CommonString> csl;
 	
 	CommonStringList(IntString s1, IntString s2){
 		this.s1 = s1;
 		this.s2 = s2;
-		this.csl = new HashSet<CommonString>();
+		this.csl = new ArrayList<CommonString>();
 	}
+	
+	
 	
 	CommonStringList(IntString s){
 		this(s, s);
@@ -24,7 +31,7 @@ public class CommonStringList {
 				if (s1.get(i) == s2.get(j)){
 					CommonString temp = new CommonString(i, j, new IntString(s1.subList(i, i+1)));
 					
-					HashSet<CommonString> buffer = new HashSet<CommonString>();
+					ArrayList<CommonString> buffer = new ArrayList<CommonString>();
 					
 					for(CommonString cs : csl){
 						if (cs.get_pos1()+cs.get_tab().size() == i && cs.get_pos2()+cs.get_tab().size() == j){
@@ -40,9 +47,14 @@ public class CommonStringList {
 				}
 			}
 		}
+		Collections.sort(csl);
 	}
 	
-	public HashSet<CommonString> get_csl(){
+	
+	
+	public ArrayList<CommonString> get_csl(){
 		return csl;
 	}
+
+	
 }

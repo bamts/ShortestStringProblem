@@ -1,22 +1,33 @@
 package com.polytech.di.scd;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class IntString extends ArrayList<Integer> {
+public class IntString extends ArrayList<Integer> implements Comparable<IntString>{
 	
 	IntString(List<Integer> list){
 		super(list);
+	}
+	
+	IntString(String str){ // constructeur avec une String telle que : 1,2,3,4
+		String[] vals = str.split(",");
+		for(String i : vals){
+			this.add(Integer.parseInt(i.trim()));
+		}
 	}
 	
 	IntString(){
 		super();
 	}
 	
+	@Override
 	public IntString clone(){
 		return (IntString) super.clone();
 		
 	}
+	
+	
 	public void exchange(int i, int j){
 		if (i != j && i < this.size() && j < this.size() && i >= 0 && j >= 0){
 			int c = this.get(i);
@@ -35,4 +46,9 @@ public class IntString extends ArrayList<Integer> {
 			exchange(i, j);
 		}	
 	}
+	@Override
+	public int compareTo(IntString _compare) {
+		return -1*(this.toString().compareTo(_compare.toString()));
+	}
+
 }

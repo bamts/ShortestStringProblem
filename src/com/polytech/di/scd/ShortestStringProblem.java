@@ -11,27 +11,18 @@ public class ShortestStringProblem {
 		
 		//interface pour GLPK à completer ...
 		//affiche la version de GLPK
-		new Glpk();
+		//new Glpk();
+	
+		IntString hint = new IntString(new ArrayList<Integer>(){{
+			add(0);
+			add(1);
+			add(2);
+			add(4);
+		}});
 		
-		if(args==null){
-			IntString hint = new IntString(new ArrayList<Integer>(){{
-				add(0);
-				add(1);
-				add(2);
-				add(4);
-			}});
-			
-			Generate gen=new Generate(6,hint);
-			
-			IntString s1 = gen.getS1();
-			IntString s2 = gen.getS2();
-				
-			CommonStringList myListOfCommonString = new CommonStringList(s1, s2);
-			
-			myListOfCommonString.constructCommonStringList();
-			System.out.println(" - "+s1.toString()+"\n - "+s2.toString());
-			
-			System.out.println(myListOfCommonString.get_csl());
-		}
+		new Instances(10,6,hint);
+		
+		
+		
 	}
 }
