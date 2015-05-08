@@ -41,7 +41,7 @@ public class Glpk {
 						i++;
 						
 					}					
-					new createProblem(M1,M2);
+					new createProblem(M1,M2,file.getName());
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
