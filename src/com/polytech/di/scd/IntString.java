@@ -48,7 +48,12 @@ public class IntString extends ArrayList<Integer> implements Comparable<IntStrin
 	}
 	@Override
 	public int compareTo(IntString _compare) {
-		return -1*(this.toString().compareTo(_compare.toString()));
+		if(this.size()>_compare.size())
+			return -1;
+		else if(this.size()<_compare.size())
+			return 1;
+		else
+		return this.toString().compareTo(_compare.toString());
 	}
 
 }

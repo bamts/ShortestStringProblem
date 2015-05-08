@@ -17,10 +17,10 @@ public class ShortestStringProblem {
 			add(0);
 			add(1);
 			add(2);
-			add(4);
+			add(3);
 		}});
 		
-		new Instances(10,6,hint);
+		new Instances(1,6,hint);
 		
 		
 		

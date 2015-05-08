@@ -12,7 +12,7 @@ public class Generate {
 		}
 		s1=temp.clone();
 		s2=temp.clone();
-		s2.swap(size, hint.size());
+		s2.swap(size+1, hint.size());
 	}
 	public IntString getS1(){
 		return s1;

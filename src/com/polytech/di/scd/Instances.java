@@ -39,7 +39,7 @@ public class Instances {
 			IntString s2=gen.getS2();
 			CommonStringList myListOfCommonString = new CommonStringList(s1, s2);
 			myListOfCommonString.constructCommonStringList();
-			
+			Collections.sort(myListOfCommonString.get_csl());
 			
 			try {
 				

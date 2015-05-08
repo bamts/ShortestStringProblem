@@ -29,7 +29,10 @@ public class CommonString implements Comparable<CommonString>{
 
 	@Override
 	public int compareTo(CommonString _csl) {
-		return this.tab.compareTo(_csl.tab);
+		int tcp=this.tab.compareTo(_csl.tab);
+		if(tcp==0)
+			return ((this.pos1)-(_csl.pos1));
+		return tcp;
 	}
 
 }
