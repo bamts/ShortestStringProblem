@@ -11,19 +11,19 @@ public class createProblem {
 		int n = m1.length;//rows
 		int m =m1[0].length;//cols
 		
-		ArrayList<Integer> sum1=new ArrayList<Integer>();
-		ArrayList<Integer> sum2=new ArrayList<Integer>();
-				
-		for(int j = 0 ; j<m ; j++){
-			int res1=0;
-			int res2=0;
-			for(int i = 0 ; i<n ; i++){
-				res1+=(m1[i][j] ? 1 : 0);	//convert bool to int
-				res2+=(m2[i][j] ? 1 : 0);	//convert bool to int				
-			}
-			sum1.add(res1);
-			sum2.add(res2);
-		}
+//		ArrayList<Integer> sum1=new ArrayList<Integer>();
+//		ArrayList<Integer> sum2=new ArrayList<Integer>();
+//				
+//		for(int j = 0 ; j<m ; j++){
+//			int res1=0;
+//			int res2=0;
+//			for(int i = 0 ; i<n ; i++){
+//				res1+=(m1[i][j] ? 1 : 0);
+//				res2+=(m2[i][j] ? 1 : 0);		
+//			}
+//			sum1.add(res1);
+//			sum2.add(res2);
+//		}
 		
         glp_prob lp;
         glp_smcp parm;
@@ -37,31 +37,41 @@ public class createProblem {
         	System.out.println("Problème de "+ nom + " créé");
         	
         	//colonnes
-        	GLPK.glp_add_cols(lp, 2*n);
-        	//ajouter une colonne par somme sur une colonne de m1 ( première contrainte )
+        	GLPK.glp_add_cols(lp, n+1);
+        	//xi in 0..n
         	for(int i=1 ; i<=n ; i++){
-        		GLPK.glp_set_col_name(lp, i, "S1"+i);
-        		GLPK.glp_set_col_kind(lp, i, GLPKConstants.GLP_CV);
-        		GLPK.glp_set_col_bnds(lp, i, GLPKConstants.GLP_FX, sum1.get(i-1), 0);//0 ignored car GLP_FX
-        	}
-        	for(int i=n+1 ; i<=2*n ; i++){
-        		GLPK.glp_set_col_name(lp, i, "S2"+(i-n));
-        		GLPK.glp_set_col_kind(lp, i, GLPKConstants.GLP_CV);
-        		GLPK.glp_set_col_bnds(lp, i, GLPKConstants.GLP_FX, sum2.get(i-n-1), 0);//0 ignored car GLP_FX
+        		GLPK.glp_set_col_name(lp, i, "X"+i);
+        		GLPK.glp_set_col_kind(lp, i, GLPKConstants.GLP_BV);
+        		GLPK.glp_set_col_bnds(lp, i, GLPKConstants.GLP_DB, 0, 1);
         	}
         	
         	//contraintes = lignes
         	
-        	ind = GLPK.new_intArray(2*n);//taille de la ligne
-        	val = GLPK.new_doubleArray(2*n);
-        	
-        	GLPK.glp_set_row_name(lp, 1, "X");
-        	GLPK.glp_set_row_bnds(lp, 1, GLPKConstants.GLP_DB, 0, 1);//attention 0 ou 1 pas entre 0 et 1
-        	for(int i = 1 ; i<=2*n ; i++){
-        		GLPK.intArray_setitem(ind, i, i);
-        		GLPK.doubleArray_setitem(val, i, 1);        		
+        	ind = GLPK.new_intArray(n+1);//taille de la ligne
+        	val = GLPK.new_doubleArray(n+1);
+
+            GLPK.glp_add_rows(lp, m+1);//m contraintes pour M1
+        	for(int j=1 ; j<=m ; j++){
+        	GLPK.glp_set_row_name(lp, j, "S1"+(j-1));
+        	GLPK.glp_set_row_bnds(lp, j, GLPKConstants.GLP_FX , 1, 1);
+	        	for(int i=1 ; i<=n ; i++){
+	        		GLPK.intArray_setitem(ind, i, i);
+	        		GLPK.doubleArray_setitem(val, i, m1[i-1][j-1] ? 1 : 0);	//cast bool to int		
+        		}
+	        GLPK.glp_set_mat_row(lp, j, m+1, ind, val);
+	                	
         	}
-        	GLPK.glp_set_mat_row(lp, 1, 2*n, ind, val);
+            GLPK.glp_add_rows(lp, m+1);//m contraintes pour M2
+        	for(int j=1 ; j<=m ; j++){
+        	GLPK.glp_set_row_name(lp, j+m, "S2"+(j-1));
+        	GLPK.glp_set_row_bnds(lp, J+m, GLPKConstants.GLP_FX, 1, 1);
+        		for(int i=1 ; i<=n ; i++){
+	        		GLPK.intArray_setitem(ind, i, i);
+	        		GLPK.doubleArray_setitem(val, i, m2[i-1][j-1] ? 1 : 0);     
+        		}
+            GLPK.glp_set_mat_row(lp, j+m, m+1, ind, val);
+            	
+        	}
         	
         	GLPK.delete_intArray(ind);
         	GLPK.delete_doubleArray(val);
@@ -69,11 +79,11 @@ public class createProblem {
         	//objectif
         	GLPK.glp_set_obj_name(lp,"SumX");
         	GLPK.glp_set_obj_dir(lp, GLPKConstants.GLP_MIN);
-        	for(int i=1 ; i<=2*n ; i++)
+        	for(int i=1 ; i<=n ; i++)
         		GLPK.glp_set_obj_coef(lp, i , 1);
         	
         	//model -> file
-        	GLPK.glp_write_lp(lp, null, "Models"+nom.substring(nom.indexOf('\\'))+".lp");
+        	GLPK.glp_write_lp(lp, null, "Models//"+nom.substring(0,nom.indexOf('.'))+".lp");
         	
         	//solve
         	
@@ -97,9 +107,44 @@ public class createProblem {
 	}
 
 	static void writeSol(glp_prob lp){
+        int i;
+        int n;
+        String name;
+        double val;
+
+        name = GLPK.glp_get_obj_name(lp);
+        val = GLPK.glp_get_obj_val(lp);
+        System.out.print(name);
+        System.out.print(" = ");
+        System.out.println(val);
+        n = GLPK.glp_get_num_cols(lp);
+        for (i = 1; i <= n; i++) {
+            name = GLPK.glp_get_col_name(lp, i);
+            val = GLPK.glp_get_col_prim(lp, i);
+            System.out.print(name);
+            System.out.print(" = ");
+            System.out.println(val);
+        }
 		
 	}
 	static void writeFailed(glp_prob lp){
-		
+        int i;
+        int n;
+        String name;
+        double val;
+
+        name = GLPK.glp_get_obj_name(lp);
+        val = GLPK.glp_get_obj_val(lp);
+        System.out.print(name);
+        System.out.print(" = ");
+        System.out.println(val);
+        n = GLPK.glp_get_num_cols(lp);
+        for (i = 1; i <= n; i++) {
+            name = GLPK.glp_get_col_name(lp, i);
+            val = GLPK.glp_get_col_prim(lp, i);
+            System.out.print(name);
+            System.out.print(" = ");
+            System.out.println(val);
+        }
 	}
 }
