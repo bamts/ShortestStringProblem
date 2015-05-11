@@ -53,7 +53,7 @@ public class IntString extends ArrayList<Integer> implements Comparable<IntStrin
 		else if(this.size()<_compare.size())
 			return 1;
 		else
-		return this.toString().compareTo(_compare.toString());
+		return this.toString().compareTo(_compare.toString())+1/this.toString().compareTo(_compare.toString()+1);
 	}
 
 }
