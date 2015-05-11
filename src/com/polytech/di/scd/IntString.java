@@ -19,14 +19,7 @@ public class IntString extends ArrayList<Integer> implements Comparable<IntStrin
 	
 	IntString(){
 		super();
-	}
-	
-	@Override
-	public IntString clone(){
-		return (IntString) super.clone();
-		
-	}
-	
+	}	
 	
 	public void exchange(int i, int j){
 		if (i != j && i < this.size() && j < this.size() && i >= 0 && j >= 0){

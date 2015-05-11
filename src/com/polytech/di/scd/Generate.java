@@ -10,8 +10,8 @@ public class Generate {
 			rand=(int) (Math.random()*hint.size()+1);
 			temp.add(hint.get(rand-1));
 		}
-		s1=temp.clone();
-		s2=temp.clone();
+		s1=(IntString) temp.clone();
+		s2=(IntString) temp.clone();
 		s2.swap(size+1, hint.size());
 	}
 	public IntString getS1(){

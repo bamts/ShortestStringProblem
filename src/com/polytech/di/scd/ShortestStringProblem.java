@@ -1,15 +1,13 @@
 package com.polytech.di.scd;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class ShortestStringProblem {
 
 	public static void main(String[] args) {
 		// TODO Stub de la méthode généré automatiquement
 		
-		//interface pour GLPK � completer ...
+		//interface pour GLPK � completer ...
 		//affiche la version de GLPK
 		//new Glpk();
 	
@@ -20,7 +18,7 @@ public class ShortestStringProblem {
 			add(3);
 		}});
 		
-		new Instances(1,6,hint);
+		//new Instances(1,6,hint);
 		
 		
 		
