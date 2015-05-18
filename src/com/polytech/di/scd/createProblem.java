@@ -34,7 +34,7 @@ public class createProblem {
         try{
         	lp=GLPK.glp_create_prob();
         	GLPK.glp_set_prob_name(lp, nom);
-        	System.out.println("Problème de "+ nom + " créé");
+        	System.out.println("ProblÃ¨me de "+ nom + " crÃ©e");
         	
         	//colonnes
         	GLPK.glp_add_cols(lp, n+1);
@@ -64,7 +64,7 @@ public class createProblem {
             GLPK.glp_add_rows(lp, m+1);//m contraintes pour M2
         	for(int j=1 ; j<=m ; j++){
         	GLPK.glp_set_row_name(lp, j+m, "S2"+(j-1));
-        	GLPK.glp_set_row_bnds(lp, J+m, GLPKConstants.GLP_FX, 1, 1);
+        	GLPK.glp_set_row_bnds(lp, j+m, GLPKConstants.GLP_FX, 1, 1);
         		for(int i=1 ; i<=n ; i++){
 	        		GLPK.intArray_setitem(ind, i, i);
 	        		GLPK.doubleArray_setitem(val, i, m2[i-1][j-1] ? 1 : 0);     

@@ -10,9 +10,10 @@ import java.util.Comparator;
 
 public class Instances {
 
-	String nomDir="Instances\\";
-	int count=0;
-	File directory;
+	private String nomDir="Instances/";
+	private int count=0;
+	private File directory;
+	
 	public Instances(int nb_instances, int size, IntString hint) {
 		
 		File root=new File("Instances");
@@ -20,7 +21,7 @@ public class Instances {
 			root.mkdir();
 		}
 		
-		nomDir+="Instances_"+nb_instances+"_"+size+"_"+hint;
+		nomDir+="Instances_"+nb_instances+"_"+size+"_"+hint+"/";
 		
 		directory = new File(nomDir);
 		
@@ -33,21 +34,17 @@ public class Instances {
 		
 		for(int i = 1 ; i <= nb_instances ; i++){
 			
-
-			Generate gen=new Generate(size,hint);
-			IntString s1=gen.getS1();
-			IntString s2=gen.getS2();
-			CommonStringList myListOfCommonString = new CommonStringList(s1, s2);
+			CommonStringList myListOfCommonString = new CommonStringList(size,hint);
 			myListOfCommonString.constructCommonStringList();
 			Collections.sort(myListOfCommonString.get_csl());
 			
 			try {
 				
-				File temp = new File(nomDir+"\\Instance_"+i+".txt");
+				File temp = new File(nomDir+"Instance_"+i+".txt");
 				temp.createNewFile();
 				FileWriter fw=new FileWriter(temp);
-				fw.write("S1 : "+s1.toString()+"\n");
-				fw.write("S2 : "+s2.toString()+"\n");
+				fw.write("S1 : "+myListOfCommonString.get_s1().toString()+"\n");
+				fw.write("S2 : "+myListOfCommonString.get_s2().toString()+"\n");
 				fw.write("Liste des communs:\n");
 				fw.write(myListOfCommonString.get_csl().toString());
 				fw.write("\n");

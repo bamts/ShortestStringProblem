@@ -18,7 +18,7 @@ public class ShortestStringProblem {
 			add(3);
 		}});
 		
-		//new Instances(1,6,hint);
+		new Instances(10,6,hint);
 		
 		
 		

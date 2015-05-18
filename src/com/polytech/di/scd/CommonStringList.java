@@ -12,17 +12,56 @@ public class CommonStringList{
 	private IntString s2;
 	private ArrayList<CommonString> csl;
 	
+	/**
+	 * Constructeur à partir de deux chaines.
+	 * Les deux chaines doivent impérativement être des permutations l'une de 
+	 * l'autre.
+	 * @param s1	première chaine
+	 * @param s2	seconde chaine
+	 */
 	CommonStringList(IntString s1, IntString s2){
 		this.s1 = s1;
 		this.s2 = s2;
 		this.csl = new ArrayList<CommonString>();
 	}	
 	
+	/**
+	 * Constructeur à partir d'une chaine modèle.
+	 * @param s	chaine modèle
+	 */
 	CommonStringList(IntString s){
 		this(s, s);
 		this.s2.swap(10,  30);
 	}
 	
+	/**
+	 * Constructeur par défaut.
+	 * Créer un problème de taille size à partir de l'alphabet hint.
+	 * @param size	taille des chaines à générer
+	 * @param hint	alphabet des chaines à générer 
+	 */
+	CommonStringList(int size, IntString hint){
+		this.csl = new ArrayList<CommonString>();
+		IntString temp=new IntString();
+		int rand;
+		
+		for(int i=0;i<size;i++){
+			rand=(int) (Math.random()*hint.size()+1);
+			temp.add(hint.get(rand-1));
+			/*
+			 * On construit la chaine modèle.
+			 */
+		}
+		
+		this.s1=(IntString) temp.clone();
+		this.s2=(IntString) temp.clone();
+		
+		this.s2.swap(2*size, hint.size());
+	}
+	
+	/**
+	 * construit la liste des sous chaines communes des deux chaines du problème.
+	 */
 	public void constructCommonStringList(){
 		/*
 		 * On parcourt les deux listes.
@@ -69,8 +108,20 @@ public class CommonStringList{
 		Collections.sort(csl);
 	}
 	
+	/**
+	 * Retourne la liste des sous chaines communes.
+	 * @return La liste des sous chaines communes.
+	 */
 	public ArrayList<CommonString> get_csl(){
 		return csl;
+	}
+	
+	public IntString get_s1(){
+		return this.s1;
+	}
+	
+	public IntString get_s2(){
+		return this.s2;
 	}
 
 	
