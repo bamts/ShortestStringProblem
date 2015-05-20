@@ -58,7 +58,7 @@ public class createProblem {
 	        		GLPK.intArray_setitem(ind, i, i);
 	        		GLPK.doubleArray_setitem(val, i, m1[i-1][j-1] ? 1 : 0);	//cast bool to int		
         		}
-	        GLPK.glp_set_mat_row(lp, j, m+1, ind, val);
+	        GLPK.glp_set_mat_row(lp, j, n, ind, val);
 	                	
         	}
             GLPK.glp_add_rows(lp, m+1);//m contraintes pour M2
@@ -69,7 +69,7 @@ public class createProblem {
 	        		GLPK.intArray_setitem(ind, i, i);
 	        		GLPK.doubleArray_setitem(val, i, m2[i-1][j-1] ? 1 : 0);     
         		}
-            GLPK.glp_set_mat_row(lp, j+m, m+1, ind, val);
+            GLPK.glp_set_mat_row(lp, j+m, n, ind, val);
             	
         	}
         	
